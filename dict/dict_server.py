@@ -13,13 +13,19 @@ HOST='0.0.0.0'
 PORT=8888
 ADDR=(HOST,PORT)
 
+# 注册逻辑
+def do_register(connfd,data):
+    tmp=data.split(' ')
+    name=tmp[1]
+    passwd=tmp[2]
+
 
 # 客户端处理
-def request(c):
+def request(connfd):
     while True:
-        data=c.recv(1024).decode() # 接收请求
-        if not data:
-            break
+        data=connfd.recv(1024).decode() # 接收请求
+        if data[0]=="R":
+            do_register(connfd,data)
         print(data.decode())
         c.send(b'OK')
     c.close()
