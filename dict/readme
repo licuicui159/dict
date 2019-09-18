@@ -1,3 +1,4 @@
+
 功能说明
 
 用户可以登录和注册
@@ -26,47 +27,77 @@
     * 查单词:循环输入单词,得到单词解释,输入特殊符号退出单词查询状态
     * 历史记录:查询当前用户的查词记录,要求记录包含name,word,time 可以查看所有记录或者前10条均可。
 
-1.确定技术点
+项目开发流程
 
-    并发模型和网络模型
-        多进程tcp 并发模型
+在线词典
 
-    确定细节功能，注册要注册什么
-        注册：用户名 密码 加密存储 注册后直接登录
+1. 确定技术点
 
-2.mysql数据库设计
+   并发模型和网络模型
+      多进程tcp 并发模型
 
-    user : id name passwd
+   确定细节功能，注册要注册什么，注册后是否直接登录
+      注册 ： 用户名密码， 加密存储，注册后直接登录
+      历史记录 ： 最近的前10个
 
-    hist ：id name word time
+   一级界面，二级界面如何切换
 
-    creat table hist(id int primary key auto_increment,name varchar(32) not null,word varchar(32) not null,time datetime default now());
+     见 demo
 
-3.结构设计，功能模块划分
-    *函数封装
-    *功能模块：通信，登录，注册，查询，历史记录
-4.通信搭建
+2. mysql数据库设计  dict
 
-5.登录
+    words ：  id    word   mean
+    user :  id  name  passwd
 
-  注册
-     客户端：输入用户名密码
-            发送请求
-            接收反馈
-            给出处理结果
+    create table user (id int primary key auto_increment,name varchar(32) not null,passwd char(128) not null);
 
-     服务端：接收请求，判断请求类型
-            判定用户可否注册
-            给客户端反馈
+    hist :  id  name  word   time
 
-  查询 历史记录
+    create table hist (id int primary key auto_increment,name varchar(32) not null,word varchar(32) not null,time datetime default now());
 
-协议 ： 登录 L
-       注册
 
-cookie:
+3. 结构设计，功能模块划分
+
+   如何封装，客户端和服务端工作流程，有几个功能模块
+
+   *  函数封装
+   *  功能模块： 通信，登录，注册，查询，历史记录
+
+4. 通信搭建
+
+5. 注册
+      客户端 ： 输入用户名密码
+               发送请求
+               接收反馈
+
+      服务端 ： 接收请求，判断请求类型
+               判定用户可否注册
+               给客户端反馈
+
+
+   登录，
+
+   查询，
+
+   历史记录
+
+协议 ： 登录   L
+       注册   R
+       查单词  Q
+       历史记录  H
+       退出   E
+
+cookie：
+    import  getpass
+    pwd = getpass.getpass()
+    功能: 隐藏输入内容
+
+    # 加密密码
     import getpass
-    passwd=getpass.getpass()
-    password:
-    psddwd
+    pwd=getpass.getpass()
 
+    import hashlib
+    dir(hashlib) # 查看模块方法
+    hash=hashlib.md5() #功能：生成md5对象
+    hash.update(passwd.encode()) 功能：进行加密处理，参数：密码转化为字节串
+    new_passwd=hash.hexdigest() # 功能:得到转化后的密码
