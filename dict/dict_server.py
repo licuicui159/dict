@@ -56,12 +56,14 @@ def do_query(connfd, data):
 def do_history(connfd, data):
     name=data.split(' ')[1]
     r=db.history(name)
-    if not r[0]:
+    if not r:
         connfd.send("没有记录".encode())
-    for i in r:
-        msg="%s  %-16s  %s" % i
-        connfd.send(msg.encode())
         sleep(0.1)
+    else:
+        for i in r:
+            msg="%s  %-16s  %s" % i
+            connfd.send(msg.encode())
+            sleep(0.1)
     connfd.send(b'##')
 
 def do_cancellation(connfd, data):
