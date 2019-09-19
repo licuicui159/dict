@@ -66,6 +66,7 @@ def do_history(connfd, data):
             sleep(0.1)
     connfd.send(b'##')
 
+# 注销用户
 def do_cancellation(connfd, data):
     name=data.split(' ')[1]
     if db.cancellation(name):
