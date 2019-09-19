@@ -75,11 +75,28 @@
                给客户端反馈
 
 
-   登录，
+   登录
+       客户端 : 输入用户名密码
+               发送请求
+               等待反馈
 
-   查询，
+       服务端 ： 接收请求
+                验证信息
+                发送结果
+
+   查询
+       客户端 ： 输入单词
+                发送请求 （套接字）
+                接收结果
+
+       服务器 ：　接收请求
+       　　　　　　查找单词
+       　　　　　　插入历史记录
+       　　　　　　发送给客户端
 
    历史记录
+   
+   注销
 
 协议 ： 登录   L
        注册   R
@@ -89,15 +106,20 @@
 
 cookie：
     import  getpass
+
     pwd = getpass.getpass()
     功能: 隐藏输入内容
 
-    # 加密密码
-    import getpass
-    pwd=getpass.getpass()
 
-    import hashlib
-    dir(hashlib) # 查看模块方法
-    hash=hashlib.md5() #功能：生成md5对象
-    hash.update(passwd.encode()) 功能：进行加密处理，参数：密码转化为字节串
-    new_passwd=hash.hexdigest() # 功能:得到转化后的密码
+    import  hashlib
+
+    hash = hashlib.md5()
+    功能： 生产md5对象
+    参数 ： 盐（自定义的字节串）
+
+    hash.update(passwd.encode())
+    功能: 进行加密处理
+    参数: 密码转换为字节串
+
+    new_passwd = hash.hexdigest()
+    功能： 得到转换后的密码
